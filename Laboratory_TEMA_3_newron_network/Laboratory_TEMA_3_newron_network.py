@@ -14,7 +14,6 @@ def target_function(x):
     return torch.sin(x+2) * 3**x
 
 def metric(pred, target):
-    # return (pred - target).abs().mean()
     return ((pred - target) ** 2).mean()
 
 
@@ -35,20 +34,6 @@ class RegressionNet(torch.nn.Module):
         output = self.output_layer(z)
         return output
 
-
-# class RegressionNet(torch.nn.Module):
-#     def __init__(self, hidden_size):
-#         super().__init__()
-#         self.layer1 = torch.nn.Linear(1, hidden_size)
-#         self.act1 = torch.nn.Sigmoid() # torch.nn.ReLU() 
-#         self.layer2 = torch.nn.Linear(hidden_size, 1)
-
-#     def forward(self, x):
-#         z = self.layer1(x)
-#         z = self.act1(z)
-#         z = self.layer2(z)
-#         return z
-
 net = RegressionNet(512)  
 
 x_train = torch.linspace(-10, 5, 100)
@@ -64,7 +49,6 @@ x_validation.unsqueeze_(1)
 y_validation.unsqueeze_(1)
 
 optimizer = torch.optim.Adam(net.parameters(), lr=0.0001)  
-# optimizer =  torch.optim.AdamW(net.parameters(), lr=0.00015, weight_decay=0.001)
 
 for epoch_index in range(21930):
     optimizer.zero_grad()
